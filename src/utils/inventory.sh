@@ -1,6 +1,7 @@
 #!/bin/bash
 # utils/inventory.sh
 
+
 # Check if an item exists in the inventory
 function check_inventory() {
     local item=$1
