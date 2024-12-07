@@ -1,0 +1,4 @@
+2024-12-07 02:50:22: Player chose path: left. Outcome: Dart trap triggered.
+2024-12-07 02:50:22: Health reduced to 80.
+2024-12-07 02:50:22: Stage 1 completed. Remaining health: 88.
+2024-12-07 02:50:22 [ERROR]: Player input 'fly' in Stage 2, which is an invalid action.

@@ -1,19 +1,23 @@
 #!/bin/bash
 # utils/player.sh
 
+source helpers.sh
+
 # Initialize player stats
 function init_player() {
+    player_name=$1
     player_health=100
     player_inventory=()
     echo "Player initialized with health: $player_health."
-    log_action "Player initialized with health: $player_health."
+    log_action "Player $player_name initialized with health: $player_health."
 }
 
 # Update player health
 function update_health() {
     local amount=$1
     player_health=$((player_health + amount))
-    if [[ $player_health -le 0 ]]; then
+    if [ $player_health -le 0 ]
+    then
         echo "Your health has dropped to 0. Game over!"
         log_action "Player health dropped to 0. Game over."
         exit 1
@@ -36,3 +40,4 @@ function display_player_stats() {
     echo "Inventory: ${player_inventory[*]}"
     log_action "Player stats displayed: Health - $player_health, Inventory - ${player_inventory[*]}."
 }
+

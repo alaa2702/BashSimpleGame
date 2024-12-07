@@ -1,6 +1,20 @@
 #!/bin/bash
 # stages/stage1.sh
+source ../utils/logging.sh
+# Function to display a stage banner
+function display_stage_banner() {
+    local stage_name=$1
 
+    # Decorative banner
+    echo "========================================"
+    echo "          $stage_name"
+    echo "========================================"
+    echo
+    echo "Prepare yourself for the challenges ahead!"
+    echo
+}
+
+# Function to take the player user name
 function puzzle_declare_variable() {
     local temp_file=$1
     echo "Task 1: Declare a variable to store your explorer name."
@@ -39,7 +53,7 @@ function puzzle_arithmetic() {
             if [[ "$total" -eq 173 ]]; then
                 echo "Correct! The total is $total."
                 echo "total=$total" >> "$temp_file"
-                log_action "Player calculated total=$total"
+                #log_action "Player calculated total=$total"
                 break
             else
                 echo "Incorrect result. Check your numbers and try again."
@@ -65,7 +79,7 @@ function puzzle_combine() {
             if [[ -n "$id" ]]; then
                 echo "Excellent! Your unique ID is: $id"
                 echo "id=\"$id\"" >> "$temp_file"
-                log_action "Player generated id=$id"
+                #log_action "Player generated id=$id"
                 break
             else
                 echo "Something went wrong. Try again."
@@ -76,28 +90,15 @@ function puzzle_combine() {
     done
 }
 
-# Function to display a stage banner
-function display_stage_banner() {
-    local stage_name=$1
-
-    # Decorative banner
-    echo "========================================"
-    echo "          $stage_name"
-    echo "========================================"
-    echo
-    echo "Prepare yourself for the challenges ahead!"
-    echo
-}
 
 function stage_1() {
 
-    display_stage_banner "Stage 1: Variables Chamber"
+   display_stage_banner "Stage 1: Variables Chamber"
 
     echo "You step into the Variables Chamber, where ancient scripts glow faintly on the walls."
     echo "The inscriptions whisper knowledge about variables in Bash. Solve the puzzles to proceed."
     echo
-
-    # Create a temporary file for environment setup
+     # Create a temporary file for environment setup
     temp_file=$(mktemp)
     echo "# Temporary Variables Chamber environment" > "$temp_file"
     echo
@@ -112,6 +113,7 @@ function stage_1() {
     puzzle_combine "$temp_file"
 
     echo "Congratulations! You have completed the Variables Chamber."
+    cat "$temp_file"
     rm "$temp_file"
     return 0
 }
