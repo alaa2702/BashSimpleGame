@@ -1,18 +1,9 @@
 #!/bin/bash
 # stages/stage1.sh
-source ../utils/logging.sh
-# Function to display a stage banner
-function display_stage_banner() {
-    local stage_name=$1
-
-    # Decorative banner
-    echo "========================================"
-    echo "          $stage_name"
-    echo "========================================"
-    echo
-    echo "Prepare yourself for the challenges ahead!"
-    echo
-}
+source ../utils/scoring.sh
+source ../utils/helpers.sh
+source ../utils/inventory.sh
+source ../utils/player.sh
 
 # Function to take the player user name
 function puzzle_declare_variable() {
