@@ -1,13 +1,13 @@
 #!/bin/bash
 # utils/player.sh
 
-source helpers.sh
-
+source ../utils/logs.sh
 # Initialize player stats
 function init_player() {
     player_name=$1
     player_health=100
     player_inventory=()
+    creat_file_for_player $player_name
     echo "Player initialized with health: $player_health."
     log_action "Player $player_name initialized with health: $player_health."
 }
@@ -29,7 +29,11 @@ function update_health() {
 # Add item to inventory
 function add_to_inventory() {
     local item=$1
-    player_inventory+=("$item")
+    local item_num=$2
+    for i in $(seq 1 $item_num)
+    do
+        player_inventory+=("$item")
+    done
     echo "You acquired: $item."
     log_action "Item added to inventory: $item."
 }

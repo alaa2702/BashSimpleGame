@@ -1,0 +1,29 @@
+# Jungle Trek Map
+
+[Edge of the Jungle]
+- Description: The dense jungle looms ahead. You can hear distant animal calls and rustling leaves.
+- Directions: 
+  - North: Abandoned Campsite
+
+[Abandoned Campsite]
+- Description: A small clearing with remnants of an old campsite. Scattered tools are visible under the debris.
+- Directions:
+  - North: River Crossing
+  - East: Engraved Structure
+  - South: Edge of the Jungle
+
+[River Crossing]
+- Description: A wide river with a strong current blocks your way. Broken planks suggest a collapsed bridge.
+- Directions:
+  - South: Abandoned Campsite
+
+[Engraved Structure]
+- Description: A small stone pillar stands here, covered in ancient carvings that glow faintly in the light.
+- Directions:
+  - West: Abandoned Campsite
+  - East: Hidden Clearing
+
+[Hidden Clearing]
+- Description: A secluded area surrounded by thick trees. In the center lies a strange tablet on a pedestal.
+- Directions:
+  - West: Engraved Structure
