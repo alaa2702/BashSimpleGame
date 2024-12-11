@@ -31,6 +31,7 @@ function display_stage_banner() {
     echo "========================================"
    # log_action "Entered $stage_name."
 }
+
 # function used to set a trap for the player 
 function trigger_trap() {
     local trap_name=$1
@@ -39,106 +40,31 @@ function trigger_trap() {
     echo "You triggered a $trap_name trap! -$damage health points."
     log_action "Player triggered a $trap_name trap. -$damage health points."
  }
-#function to pause the game
-function pause_game() {
-    echo "Game paused."
-    log_action "Game paused."
-    read -p "Press Enter to continue..."
-}
-#function to display the player inventory
-function view_inventory() {
-    echo "Inventory: ${player_inventory[*]}"
-    log_action "Player inventory displayed: ${player_inventory[*]}."
-}
-#function to display the player health
-function check_health() {
-    echo "Health: $player_health"
-    log_action "Player health displayed: $player_health."
-}
 
-#function to quit the game
-function quit_game() {
-    echo "Exiting game..."
-    log_action "Player quit the game."
-    exit 0
-}
-#function to scan the place
-function scan_place() {
-    local stage_name=$1
-    local task=$2
-    echo "Scanning the area..."
-    sleep 2
-    case "$stage_name" in
-    "Pre-Stage")
-        case "$task" in
-        "Task 1")
-            echo "You found a hidden path to the North."
-            log_action "Player scanned the area for Stage $stage_name, Task $task."
-            ;;
-        "Task 2")
-            echo "You found a crate with supplies."
-            echo "You received: 1x Water bottle, 1x First aid kit, 1x Flashlight."
-            log_action "Player scanned the area for Stage $stage_name, Task $task."
-            add_to_inventory "Water bottle" 1
-            add_to_inventory "First aid kit" 1
-            add_to_inventory "Flashlight" 1
-            ;;
-        "Task 3")
-           echo "You see distant trees opening into a clearing to the east and hear the sound of rushing water to the north."
-            log_action "Player scanned the area for Stage $stage_name, Task $task."
-            ;;
-        "task 4")
-            echo "You discover carvings resembling ancient commands."
-            echo "Commands: 'ls', 'cd', 'cat', 'pwd', 'echo', 'grep', 'chmod', 'mv', 'rm', 'cp', 'touch', 'mkdir', 'rmdir', 'clear'"
-            echo "You feel a strange energy emanating from the carvings."
-            echo "You sense that the commands may be useful later on."
-            
-            log_action "Player scanned the area for Stage $stage_name, Task $task."
-            ;;
-        "task 5")
-            echo "the bridge is broken, you need to find another way to cross the river or going back."
-            log_action "Player scanned the area for Stage $stage_name, Task $task."
-
-        esac
-        ;;
-       esac
-
-    log_action "Player scanned the area for Stage $stage_name, Task $task."
-}
-#function to check if the player used one of the game commands
-function check_for_commands() {
+# function used to check if the player enter a command that from the list of commands
+function check_command() {
     local command=$1
-    local stage_name=$2
-    local task=$3
-    local player_input=$4
+    local current_stage=$2
     case "$command" in
-    pause)
-        pause_game
+    "cat map.txt")
+        echo "Checking available files:"
+        cat ../assets/playing_files/map.txt
         ;;
-    inventory)
-        view_inventory
+    "cat status.txt")
+        echo "Checking player status:"
+        cat ../assets/playing_files/status.txt
         ;;
-    scan)
-        scan_place "$stage_name" "$task"
+    "cat hints.txt")
+        echo "Checking available files:"
+        cat ../assets/hints/hint/{$current_stage}_hints.txt
         ;;
-    hint)
-        display_hint "$stage_name" "$task"
+    "cat inventory.txt")
+        echo "Checking inventory contents:"
+        cat ../assets/playing_files/inventory.txt
         ;;
-    health)
-        check_health
-        ;;
-    map)
-        cat ../assets/map.txt
-        ;;
-
-    quit)
-        quit_game
-        ;;
-    
     *)
-        echo "Invalid command."
+        echo "Invalid choice."
         ;;
-esac
+    esac
 
 }
-
