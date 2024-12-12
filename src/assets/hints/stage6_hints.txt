@@ -1,5 +1,40 @@
-1:
-2:
-3:
-4:
-5:
+Hint File for Stage 6: Temple Collapse Escape
+
+General Hints:
+1. Carefully read through the escape_routes.txt file.
+   - Look for lines containing the word "safe" to identify a possible escape route.
+   - If the file is missing, you will need to handle this error gracefully.
+
+2. Pay attention to the paths you validate.
+   - Use the 'validate_path' function to check if directories or files exist.
+   - Ensure all required files and directories are in place to avoid mistakes.
+
+3. Codex Fragments:
+   - Make sure all 8 fragments (fragment_*.txt) are available.
+   - Use the 'cat' command to combine them into 'Codex_of_Computis.txt'.
+   - If any fragments are missing, identify how many are needed and avoid exceeding the maximum mistake limit.
+
+4. Survival Task:
+   - If too many mistakes are made, you'll need to clear debris files (debris_*.txt).
+   - Ensure all debris files are removed successfully to proceed.
+   - Failing to clear debris after two attempts will result in failure.
+
+Debugging Tips:
+- Use 'echo' statements to print out variable values for debugging.
+- Check log files (e.g., escape_progress.log) for detailed progress updates.
+- Review the structure and contents of the directory before running the script.
+
+Specific Commands to Verify Setup:
+1. Ensure the escape routes file exists:
+   ls -l escape_routes.txt
+
+2. Check for the presence of all Codex fragments:
+   ls -l fragment_*.txt
+
+3. Validate that debris files are in the correct format:
+   ls -l debris_*.txt
+
+Strategies to Win:
+- Avoid unnecessary mistakes by validating files and paths before proceeding.
+- Complete each task in the specified order to ensure no steps are missed.
+- Use logs to track progress and identify errors early.

@@ -1,5 +1,56 @@
-1:
-2:
-3:
-4:
-5:
+Hint File for Stage 5: The Hidden Chamber
+
+General Hints:
+1. Understand Array Basics
+   - Learn how to create an array in Bash using `arr=(value1 value2 ...)`.
+   - Familiarize yourself with array indices and referencing using `${arr[index]}`.
+
+2. Iterating Through Arrays
+   - Use a `for` loop to iterate through all elements in the array.
+   - Example:
+     ```bash
+     for item in "${arr[@]}"; do
+         echo "$item"
+     done
+     ```
+
+3. Filtering Arrays
+   - Use conditional statements within loops to filter specific elements.
+   - Example: Filter even numbers
+     ```bash
+     for item in "${arr[@]}"; do
+         if (( item % 2 == 0 )); then
+             even_arr+=("$item")
+         fi
+     done
+     ```
+
+4. Pattern Matching
+   - Use conditional checks to match patterns in arrays, e.g., finding a specific number.
+   - Example: Find number 7
+     ```bash
+     for item in "${arr[@]}"; do
+         if [[ $item -eq 7 ]]; then
+             echo "Found 7!"
+         fi
+     done
+     ```
+
+5. Survival Challenge Tips
+   - Read lines from a file using a `while read` loop.
+   - Example: Process each gap in 'gaps.txt'
+     ```bash
+     while read gap; do
+         echo "Bridging $gap"
+     done < gaps.txt
+     ```
+
+Debugging Tips:
+- Use `echo` statements to print variables and arrays for debugging.
+- Run small parts of your script independently to ensure correctness.
+- Verify array contents with `echo "${arr[@]}"`.
+
+Strategies to Win:
+- Break tasks into smaller steps and test them individually.
+- Minimize mistakes by double-checking syntax and logic.
+- Understand and fix mistakes early to avoid triggering the survival challenge.

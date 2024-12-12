@@ -1,5 +1,77 @@
-1:
-2:
-3:
-4:
-5:
+Hint File for Stage 2: Deadly Traps Maze
+
+General Hints:
+1.  Maze Scan and Traps
+   - The maze contains traps such as Dart Traps, Pressure Plates, and Fire Jets.
+   - Each trap requires a specific action to disable or bypass.
+
+2.  Disarm Dart Trap 
+   - Use an `if-else` structure to test wire connections and decide which wire to cut.
+   - Example:
+     ```
+     if [[ $voltage -lt 5 ]]; then
+         echo "Cut the red wire."
+     else
+         echo "Cut the blue wire."
+     fi
+     ```
+   - Replace `voltage` with the condition provided in the task.
+
+3.  Solve Pressure Plate Puzzle 
+   - Use a `for` loop to press the plates in the correct sequence (1, 3, 5).
+   - Example:
+     ```
+     for i in 1 3 5; do
+         echo "Pressing plate $i"
+     done
+     ```
+   - Ensure the sequence matches the task requirements.
+
+4.  Navigate Fire Jets 
+   - Use a `case` statement to determine the safest time to cross.
+   - Example:
+     ```
+     case $timing in
+         "safe")
+             echo "Cross now."
+             ;;
+         "danger")
+             echo "Wait."
+             ;;
+     esac
+     ```
+   - Replace `timing` with the input or condition specified.
+
+5.  Decode Cryptic Map 
+   - The map provides a binary pattern (e.g., 1101).
+   - Use an `if` statement to match the binary and decode it.
+   - Example:
+     ```
+     if [[ $binary == "1101" ]]; then
+         echo "Decoding successful."
+     fi
+     ```
+
+Survival Task:
+1.  Escape the Pit 
+   - Combine available items (e.g., rope, wooden planks, metal hooks) to construct a ladder.
+   - The correct combination is:
+     ```
+     rope+wooden planks+metal hooks
+     ```
+   - Type this combination to escape successfully.
+
+2.  Attempts and Mistakes 
+   - You have a maximum of 2 attempts to solve the survival task.
+   - Plan your actions carefully to avoid failure.
+
+Debugging Tips:
+- Use `echo` to test your logic and variable values.
+- Check for syntax errors, especially in loops and conditional statements.
+- Revisit the task descriptions to ensure your solution matches the requirements.
+
+Strategies to Win:
+- Carefully read the task descriptions and provided hints.
+- Write scripts incrementally and test each step.
+- Use hints effectively to avoid mistakes.
+- Prioritize survival task if triggered and ensure correct input.

@@ -1,5 +1,53 @@
-1:
-2:
-3:
-4:
-5:
+Hint File for Stage 1: Temple Entrance - Puzzle Locks
+
+General Hints:
+1.  Reading Glyphs 
+   - Use the `cat` command to read the contents of the glyphs file.
+   - Example:
+     ```
+     cat glyphs.txt
+     ```
+   - This will reveal the symbols and patterns needed to solve the puzzle.
+
+2.  Calculating the Area of a Hexagon 
+   - The formula to calculate the area of a hexagon is:
+     ```
+     Area = \( \frac{3 \cdot \sqrt{3}}{2} \cdot a^2 \)
+     ```
+     where `a` is the side length of the hexagon.
+   - Define a variable for the side length (e.g., `a=3`).
+   - Use `bc -l` for precise calculations involving square roots and fractions.
+   - Example:
+     ```
+     echo "(3 * sqrt(3) / 2) * ($a * $a)" | bc -l
+     ```
+
+3.  Understanding Mistakes and Hints 
+   - Mistakes are tracked, and you have a maximum of 5 attempts before triggering the survival task.
+   - After 2 mistakes:
+     - Hint: The area of a hexagon can be calculated by dividing it into six equilateral triangles.
+   - After 4 mistakes:
+     - Hint: Use `sqrt()` within `bc` for square root calculations.
+
+4.  Survival Task 
+   - If you trigger the survival task, you must calculate escape timing.
+   - Use the given formula:
+     ```
+     time = distance / speed
+     ```
+   - Example:
+     ```
+     echo "scale=2; 50 / 20" | bc
+     ```
+   - This calculates the time required to reach safety with a precision of two decimal places.
+
+Debugging Tips:
+- Use `echo` to verify the values of variables and calculations.
+- Ensure commands are typed correctly to avoid unnecessary mistakes.
+- Revisit the glyphs and formula if needed to double-check your work.
+
+Strategies to Win:
+- Read all instructions and hints carefully.
+- Define variables and use them effectively in calculations.
+- Avoid rushing through the tasks to minimize mistakes.
+- Solve the survival task promptly if it is triggered.
