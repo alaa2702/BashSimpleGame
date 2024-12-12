@@ -32,7 +32,9 @@ function update_health() {
 function check_inventory() {
     local item=$1
     for i in "${player_inventory[@]}"; do
-        if [ "$i" == "$item" ] then
+        if [ "$i" == "$item" ];
+        then
+            echo "You already have $item."
             return 0
         fi
     return 1
@@ -47,7 +49,6 @@ function add_to_inventory() {
         check_inventory "$item"
         if [ $? -eq 0 ]
         then
-            echo "You already have $item."
             log_error "Attempted to add $item to inventory, but it already exists."
             return
         fi
@@ -63,7 +64,7 @@ function add_to_inventory() {
 function remove_from_inventory() {
     local item=$1
     for i in "${!player_inventory[@]}"; do
-        if [ "${player_inventory[$i]}" = $item ] then
+        if [ "${player_inventory[$i]}" = $item ]; then
             unset 'player_inventory[$i]'
             echo "$item removed from inventory."
             log_action "Item removed from inventory: $item."

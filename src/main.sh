@@ -11,6 +11,7 @@ echo " "
 
 # get the player name and initaize the player
 echo "Please enter your name: "
+read player_name
 init_player "$player_name"
 
 # start the game    

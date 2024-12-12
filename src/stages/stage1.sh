@@ -26,9 +26,9 @@
 #The player has 1 attempts to solve the survival task without dieing.
 
 # Load helper scripts
-source ../utils/helpers.sh
-source ../utils/player.sh
-source ../utils/logs.sh
+source   utils/helpers.sh
+source   utils/player.sh
+source   utils/logs.sh
 
 mistakes=0
 survival_attempts=0
@@ -45,7 +45,7 @@ function read_glyphs(){
     read -p ">" input
     case $input in
       "cat glyphs.txt")
-        cat  ../assets/playing_file/glyphs.txt
+        cat    assets/playing_file/glyphs.txt
         log_action "Player read the glyphs"
         break
         ;;
@@ -137,4 +137,4 @@ function stage1() {
 }
 
 # Start Stage 1
-#stage1
+stage1

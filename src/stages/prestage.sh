@@ -236,4 +236,4 @@ function pre_stage() {
     echo "You are ready to continue your journey into the temple."
     log_action "Pre-stage completed."
 }
-
+pre_stage
