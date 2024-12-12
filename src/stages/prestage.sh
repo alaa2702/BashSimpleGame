@@ -2,9 +2,9 @@
 #this stage to help the player prepare for the expedition to the temple, and get familiar with the game mechanics.
 
 # Load helper scripts
-source ../utils/helpers.sh
-source ../utils/player.sh
-source ../utils/logs.sh
+source utils/helpers.sh
+source utils/player.sh
+source utils/logs.sh
 
 
 function task1_Navigation() {
@@ -37,7 +37,7 @@ function task1_Navigation() {
             ;;
       
         "cat map.txt") echo "Checking available files:"
-            cat ../assets/player_files/map.txt
+            cat  assets/player_files/map.txt
             ;;
         *) echo "Invalid choice."
             ;;
@@ -55,7 +55,7 @@ function collect_supplies() {
         read -p "> " player_input
         if [ "$player_input" == "grep" ] then
             echo "Searching for supplies in supplies.txt..."
-            grep -i "supply" ../assets/playing_files/barrel.txt
+            grep -i "supply" assets/playing_files/barrel.txt
             log_action "Player searched for supplies."
             echo "You found supplies in the barrel."
             echo "add them to your inventory."
@@ -63,12 +63,12 @@ function collect_supplies() {
             while true; do
                 read -p "> " player_input
                 if [[ "$player_input" == "touch inventory.txt" ]]; then
-                    touch ../assets/playing_files/inventory.txt
+                    touch assets/playing_files/inventory.txt
                     log_action "Player created an inventory file."
-                    for i in $(grep -i "supply" ../assets/playing_files/barrel.txt | cut -d ":" -f 2)
+                    for i in $(grep -i "supply" assets/playing_files/barrel.txt | cut -d ":" -f 2)
                     do
                         add_to_inventory "$i" 1
-                        echo "$i" >> ../assets/playing_files/inventory.txt
+                        echo "$i" >> assets/playing_files/inventory.txt
                     done
                     break
                 else
@@ -88,7 +88,7 @@ function collect_supplies() {
         read -p "> " player_input
         if [[ "$player_input" == "cat inventory.txt" ]]; then
             echo "Displaying inventory contents:"
-            cat ../assets/playing_files/inventory.txt
+            cat  assets/playing_files/inventory.txt
             log_action "Player viewed inventory."
             break
         else
@@ -117,11 +117,11 @@ function next_path() {
             break
             ;;
         "cat hints.txt") echo "Checking available files:"
-            cat ../assets/hints/hint/pre_stage_hints.txt
+            cat assets/hints/hint/pre_stage_hints.txt
             ;;
         "cat map.txt")
             echo "Checking available files:"
-            cat ../assets/playing_files/map.txt
+            cat assets/playing_files/map.txt
             ;;
         ;;  
         *) echo "Invalid choice. Use 'a' or 'b'."
@@ -157,7 +157,7 @@ function river_crossing() {
         read -p "> " player_input
         if [[ "$player_input" == "cat status.txt" ]]; then
             echo "Checking health status..."
-            cat ../assets/playing_files/status.txt
+            cat  assets/playing_files/status.txt
             log_action "Player checked health status."
             break
         else
@@ -194,7 +194,7 @@ function Enter_the_Temple() {
         read -p "> " player_input
         if [[ "$player_input" == "cat carvings.txt" ]]; then
             echo "Examining carvings..."
-            cat ../assets/playing_files/carvings.txt
+            cat assets/playing_files/carvings.txt
             log_action "Player examined carvings."
             break
         else

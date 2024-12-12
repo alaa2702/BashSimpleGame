@@ -9,7 +9,7 @@ function creat_file_for_player() {
 }
 
 function check_file_exist() {
-    log_file_name="../assets/logs/${player_name}_log_${current_date}.log"
+    log_file_name="assets/logs/${player_name}_log_${current_date}.log"
     if [ ! -f $log_file_name ]
     then
         touch "$log_file_name"

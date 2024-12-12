@@ -1,15 +1,15 @@
 #!/bin/bash
 #utils/helpers
 
-source ../utils/player.sh
-source ../utils/logs.sh
+source utils/player.sh
+source utils/logs.sh
 
 # Display a hint for the current stage
 function display_hint() {
     local stage_name=$1
     local task=$2
     # Check if a hint is available for the current stage and task
-    local hint_file="../assets/hints/${stage_name}_hints.txt"
+    local hint_file="assets/hints/${stage_name}_hints.txt"
     #search for the task hint in the file
     hint=$(grep -i "$task" "$hint_file" | cut -d ":" -f 2) #search for the task hint in the file 
     if [[ -n "$hint" ]]; then
@@ -48,13 +48,13 @@ function check_command() {
     case "$command" in
     "cat map.txt")
         echo "Checking available files:"
-        cat ../assets/playing_files/map.txt
+        cat assets/playing_files/map.txt
         log_action "Player checked the map."
         return 1
         ;;
     "cat status.txt")
         echo "Checking player status:"
-        cat ../assets/playing_files/status.txt
+        cat assets/playing_files/status.txt
         log_action "Player checked their status."
         return 1
         ;;
@@ -66,7 +66,7 @@ function check_command() {
         ;;
     "cat inventory.txt")
         echo "Checking inventory contents:"
-        cat ../assets/playing_files/inventory.txt
+        cat assets/playing_files/inventory.txt
         log_action "Player checked their inventory."
         return 1
         ;;

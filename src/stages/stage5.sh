@@ -4,9 +4,9 @@
 # Educational Focus: Array Manipulation
 
 # Load helper scripts
-source ../utils/helpers.sh
-source ../utils/player.sh
-source ../utils/logs.sh
+source  utils/helpers.sh
+source  utils/player.sh
+source  utils/logs.sh
 
 mistakes=0
 survival_attempts=0

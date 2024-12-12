@@ -1,7 +1,7 @@
 #!/bin/bash
 # utils/player.sh
 
-source ../utils/logs.sh
+source utils/logs.sh
 # Initialize player stats
 function init_player() {
     player_name=$1
@@ -82,7 +82,7 @@ function display_player_stats() {
     log_action "Player stats displayed: Health - $player_health, Inventory - ${player_inventory[*]}."
 }
 function Update_player_status_file() {
-   echo -e "Health: $player_health \nInventory: ${player_inventory[*]} \nScore: $player_score" > ../assets/playing_files/status.txt
+   echo -e "Health: $player_health \nInventory: ${player_inventory[*]} \nScore: $player_score" >  assets/playing_files/status.txt
 }
 
 
@@ -112,7 +112,7 @@ function deduct_score() {
 # Track the player's stage progress
 function save_stage_progress() {
     local current_stage=$1
-    local progress_file="../assets/saves/player_stage_progress.txt"
+    local progress_file=" assets/saves/player_stage_progress.txt"
     # Create the saves directory if it doesn't exist
     mkdir -p "$(dirname "$progress_file")"
 
@@ -129,7 +129,7 @@ function save_stage_progress() {
 
 # Load the player's stage progress
 function load_stage_progress() {
-    local progress_file="../assets/saves/player_stage_progress.txt"
+    local progress_file=" assets/saves/player_stage_progress.txt"
 
     # Check if the progress file exists
     if [ -f "$progress_file" ]
