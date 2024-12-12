@@ -35,8 +35,8 @@ function check_inventory() {
         if [ "$i" == "$item" ] then
             return 0
         fi
-    done
     return 1
+    done
 }
 # Add item to inventory
 function add_to_inventory() {

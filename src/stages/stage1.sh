@@ -3,30 +3,138 @@
 # Educational Focus: Variable Declaration and Manipulation
 
 # Scenario:
-# You stand before an enormous stone door covered in intricate geometric patterns. Next to it lies a terminal-like device inscribed with ancient text. The door won’t budge unless you solve its puzzle by manipulating variables and performing symbolic calculations.
-
-# Goal:
-# Master variable declaration and basic arithmetic operations to solve the puzzles and open the door.
+# the player stand before an enormous stone door covered in intricate geometric patterns. The door won’t budge unless he solve its puzzle by manipulating variables and performing symbolic calculations.
+# The glyphs on the door indicate that you must calculate the area of the sides of a hexagon to unlock it.he can use cat glpyhs.txt to see the glyphs.
 
 # Tasks:
-
-# Declare and manipulate variables to solve mathematical and symbolic puzzles.
-# Experiment with different approaches to find the correct solution.
-# Reset the puzzle if necessary to avoid penalties.
-#Survival Task: The door mechanism malfunctions, triggering a falling stone trap. Write a quick script to calculate escape timing using arithmetic and display results in seconds.
-# Outcomes:
-
-# Open the door and find 1-2 Codex fragments.
+# he need to declare and manipulate variables to solve mathematical and symbolic puzzles on the terminal. calculation the arear of sides in a hexagon.
+# he can experiment with different approaches to find the correct solution.
+# he can reset the puzzle if necessary to avoid penalties.
+#Survival Task (if mistakes more than 5): 
+#The door mechanism malfunctions, triggering falling stones trap. he must write a quick script to calculate escape timing using arithmetic and display results in seconds.
+ 
+# Outcomes: the player will:
+# Open the door and find 1 of Codex fragments.
 # Learn a key pattern for the glyphs in Stage 3.
-# Fail Survival Task: Crushed by falling stones.
+# Fail Survival Task: Crushed by falling stones. Game Over.
+# Game Over: Return to the beginning of the stage.
+#constraints:
+#The player has 1 attempts to solve the puzzle without deduction.
+#The player has 4 attempts to solve the puzzle with deduction.
+#with each mistake, the player will lose 1 point.
+#after 5 mistakes, the player will be asked to solve the survival task.
+#The player has 1 attempts to solve the survival task without dieing.
 
 # Load helper scripts
 source ../utils/helpers.sh
 source ../utils/player.sh
 source ../utils/logs.sh
 
-# Game Variables
-# Declare variables for the puzzle calculations
-# Variable 1: The number of sides in a hexagon
 mistakes=0
+survival_attempts=0
+Max_mistakes=5
+# Define the hexagon area calculation function
 
+function read_glyphs(){
+    echo "task 1: read the glyphs"
+    echo "you stand infront an enormous stone door covered in intricate geometric patterns. "
+    echo "The door won’t budge"
+    echo "you need to read the glyphs.txt to solve the puzzle"
+    
+    while true; do
+    read -p ">" input
+    case $input in
+      "cat glyphs.txt")
+        cat  ../assets/playing_file/glyphs.txt
+        log_action "Player read the glyphs"
+        break
+        ;;
+        *)
+        check_command "$input" "stage1"
+        ;;
+    esac
+    done
+    echo "As you stand before the puzzle, you feel the weight of the challenge. A faint humming sound emanates from the door, urging you to begin."
+   
+}
+
+# Task: Solve the Puzzle
+function solve_puzzle() {
+    echo "Task 2: Solve the Puzzle"
+    echo "You must calculate the area of the hexagon to unlock the door."
+    echo "Define the side length of the hexagon as a variable (e.g., 'a=3')."
+
+    mistakes=0
+    max_attempts=5
+
+    while [[ $mistakes -lt $max_attempts ]]; do
+        echo "Enter your calculation (use bc for arithmetic):"
+        # explain the pipe and bc -l
+        echo " bc -l is a command that allows you to perform arithmetic calculations in the terminal. The -l flag loads the math library, enabling advanced functions like square roots."
+        echo " you can write the formula of the area of a hexagon followed by | bc -l to calculate the area"
+        read -p "> " player_input
+        if [ check_command "$player_input" "stage1" ]; then
+            continue
+        elif [ "$player_input" == "echo \"(3 * sqrt(3) / 2) * ($a * $a)\" | bc -l" ]; then
+            echo "The door rumbles and slowly opens. You have solved the puzzle!"
+            log_action "Player solved the puzzle."
+            update_score 10
+            return 0
+        else
+            ((mistakes++))
+            echo "Incorrect solution. You have $((max_attempts - mistakes)) attempts left."
+            log_action "Player made a mistake. Total mistakes: $mistakes."
+
+            if [[ $mistakes -eq 2 ]]; then
+                echo "Hint: you can calculate the area of a hexagon by dividing it into six equilateral triangles."
+            elif [[ $mistakes -eq 4 ]]; then
+                echo "Hint: Use 'sqrt()' to calculate square root in 'bc'."
+            fi
+        fi
+    done
+
+    echo "The door mechanism malfunctions, triggering a falling stones trap!"
+    survival_task
+}
+
+# Task: Survival Task
+function survival_task() {
+    echo "Task 3: Survival Task"
+    echo "You must quickly calculate the escape timing to survive."
+    echo "Stone speed: 20 meters/second. Distance to safety: 50 meters."
+
+    echo "Write a script to calculate escape timing in seconds."
+    read -p "> " player_input
+
+    if [[ "$player_input" == "echo \"scale=2; 50 / 20\" | bc" ]]; then
+        echo "You successfully escaped the falling stones!"
+        log_action "Player survived the trap."
+    else
+        echo "You failed to escape the falling stones. Game Over."
+        log_action "Player failed the survival task."
+        exit 1
+    fi
+}
+
+# Stage Entry Point
+function stage1() {
+    display_stage_banner "Temple Entrance - Puzzle Locks"
+    
+    echo "You stand before the Temple Entrance, an imposing door with glowing glyphs."
+
+    # Task 1: Examine Glyphs
+    read_glyphs
+
+    # Task 2: Solve the Puzzle
+    solve_puzzle
+
+    # Successful Completion
+    echo "The door opens, revealing a fragment of the Codex and an ancient map."
+    echo "You have completed Stage 1!"
+    log_action "Stage 1 completed."
+    update_score 20
+    save_stage_progress "Stage 1"
+}
+
+# Start Stage 1
+#stage1

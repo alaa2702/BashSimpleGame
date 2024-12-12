@@ -49,21 +49,30 @@ function check_command() {
     "cat map.txt")
         echo "Checking available files:"
         cat ../assets/playing_files/map.txt
+        log_action "Player checked the map."
+        return 1
         ;;
     "cat status.txt")
         echo "Checking player status:"
         cat ../assets/playing_files/status.txt
+        log_action "Player checked their status."
+        return 1
         ;;
     "cat hints.txt")
         echo "Checking available files:"
-        cat ../assets/hints/hint/{$current_stage}_hints.txt
+        display_hint "$current_stage" "hints"
+        log_action "Player checked the hints."
+        return 1
         ;;
     "cat inventory.txt")
         echo "Checking inventory contents:"
         cat ../assets/playing_files/inventory.txt
+        log_action "Player checked their inventory."
+        return 1
         ;;
     *)
         echo "Invalid choice."
+        return 0
         ;;
     esac
 
