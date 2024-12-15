@@ -6,24 +6,6 @@
 # the player stand before an enormous stone door covered in intricate geometric patterns. The door won’t budge unless he solve its puzzle by manipulating variables and performing symbolic calculations.
 # The glyphs on the door indicate that you must calculate the area of the sides of a hexagon to unlock it.he can use cat glpyhs.txt to see the glyphs.
 
-# Tasks:
-# he need to declare and manipulate variables to solve mathematical and symbolic puzzles on the terminal. calculation the arear of sides in a hexagon.
-# he can experiment with different approaches to find the correct solution.
-# he can reset the puzzle if necessary to avoid penalties.
-#Survival Task (if mistakes more than 5): 
-#The door mechanism malfunctions, triggering falling stones trap. he must write a quick script to calculate escape timing using arithmetic and display results in seconds.
- 
-# Outcomes: the player will:
-# Open the door and find 1 of Codex fragments.
-# Learn a key pattern for the glyphs in Stage 3.
-# Fail Survival Task: Crushed by falling stones. Game Over.
-# Game Over: Return to the beginning of the stage.
-#constraints:
-#The player has 1 attempts to solve the puzzle without deduction.
-#The player has 4 attempts to solve the puzzle with deduction.
-#with each mistake, the player will lose 1 point.
-#after 5 mistakes, the player will be asked to solve the survival task.
-#The player has 1 attempts to solve the survival task without dieing.
 
 # Load helper scripts
 source   utils/helpers.sh

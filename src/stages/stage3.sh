@@ -3,141 +3,129 @@
 # Educational Focus: Loop Structures
 
 # Load helper scripts
-source  utils/helpers.sh
-source  utils/player.sh
-source  utils/logs.sh
+source utils/helpers.sh
+source utils/player.sh
+source utils/logs.sh
 
 mistakes=0
 survival_attempts=0
-Max_mistakes=5
-Max_survival_attempts=2
+max_mistakes=5
 
+# Task 1: Translate Glyphs
 function translate_glyphs() {
-    echo "Task 1: Translate Glyphs"
-    echo "The glyphs represent numbers and their double values. Translate them to unlock a clue."
-    echo "Hint: Use a for loop to calculate the double values of glyph numbers (1 to 5)."
+    echo "You step into the heart of the Mysterious Inscriptions Chamber. The walls are covered with ancient glyphs that seem to shimmer in the dim light."
+    echo "In front of you, there is a series of glyphs representing numbers from 1 to 5. Your task is to translate them to their double values."
+    echo "The translation can be done using a loop. Example: for i in {1..5}; do echo \$((i * 2)); done"
+    
+    read -p "Enter your loop script: " solution
 
-    local solution=(2 4 6 8 10)
-    local user_solution=()
-
-    echo "Use a loop to translate the glyphs. Enter the doubled values for numbers 1 to 5:"
-
-    for i in {1..5}; do
-        read -p "Glyph $i: " value
-        user_solution+=("$value")
-    done
-
-    if [ "${solution[*]}" == "${user_solution[*]}" ]; then
-        echo "Correct! The glyphs are translated."
-        log_action "Player translated glyphs successfully."
+    if [[ "$solution" == *"for"* && "$solution" == *"in"* && "$solution" == *"do"* && "$solution" == *"echo"* ]]; then
+        echo "You correctly translated the glyphs, revealing hidden numbers etched into the walls!"
     else
-        echo "Incorrect translation. Try again."
-        mistakes=$((mistakes + 1))
-        log_action "Player made a mistake in glyph translation."
-        if [ $mistakes -ge $Max_mistakes ]; then
-            echo "You triggered the survival task!"
-            survival_task
-            return
+        ((mistakes++))
+        echo "The glyphs remain unchanged. Mistakes: $mistakes/$max_mistakes"
+        if ((mistakes < max_mistakes)); then
+            echo "Hint: Remember, you need a loop to double each number. Look for 'for' and 'echo' in your script."
         fi
-        translate_glyphs
+        check_mistakes
     fi
 }
 
+# Task 2: Operate the Machine
 function operate_machine() {
-    echo "\nTask 2: Operate the Mechanism"
-    echo "You must balance the machine by keeping its power level between 5 and 10."
+    echo "\nA massive mechanism is revealed in the center of the chamber. It hums with energy, but the power level is fluctuating wildly."
+    echo "You need to balance the machine’s power level between 5 and 10 using a loop to regulate the energy."
+    echo "Example: while [ power -lt 5 ] || [ power -gt 10 ]; do ... done"
+    
+    read -p "Enter your loop script: " solution
 
-    local power=0
-
-    echo "Use 'add' or 'subtract' commands followed by a number to adjust the power level."
-    while [ $power -lt 5 ] || [ $power -gt 10 ]; do
-        if [ $power -lt 5 ]; then
-            echo "Current power: $power. Too low. Increase the power."
-        elif [ $power -gt 10 ]; then
-            echo "Current power: $power. Too high. Decrease the power."
-        fi
-
-        read -p "> " command value
-        case "$command" in
-        add)
-            power=$((power + value))
-            ;;
-        subtract)
-            power=$((power - value))
-            ;;
-        *)
-            echo "Invalid command. Use 'add' or 'subtract'."
-            ;;
-        esac
-    done
-
-    echo "Machine balanced at power level $power. Mechanism activated!"
-    log_action "Player successfully operated the machine."
-}
-
-function logic_puzzle() {
-    echo "\nTask 3: Solve the Logic Puzzle"
-    echo "You must match glyph fragments to their meanings. Use 'break' to stop incorrect attempts."
-
-    local fragments=("Sun" "Moon" "Star" "Sky" "Earth")
-    local meanings=("Day" "Night" "Light" "Air" "Ground")
-
-    echo "Match the following glyph fragments to their meanings:"
-
-    for ((i = 0; i < ${#fragments[@]}; i++)); do
-        read -p "Fragment: ${fragments[i]} Meaning: " user_input
-
-        if [ "$user_input" != "${meanings[i]}" ]; then
-            echo "Incorrect match. Breaking loop."
-            mistakes=$((mistakes + 1))
-            log_action "Player made a mistake in logic puzzle."
-            if [ $mistakes -ge $Max_mistakes ]; then
-                echo "You triggered the survival task!"
-                survival_task
-                return
-            fi
-            break
-        fi
-    done
-
-    echo "All glyph fragments matched successfully."
-    log_action "Player solved the logic puzzle."
-}
-
-function survival_task() {
-    echo "\nSurvival Task: Repair the Pump"
-    echo "The chamber is flooding! Repair the pump to escape."
-
-    local files=("pipe1.txt" "pipe2.txt" "pipe3.txt")
-    for file in "${files[@]}"; do
-        echo "Processing $file..."
-        sleep 1
-        echo "$file repaired."
-    done
-
-    survival_attempts=$((survival_attempts + 1))
-    if [ $survival_attempts -le $Max_survival_attempts ]; then
-        echo "Pump repaired. You survived!"
-        log_action "Player successfully completed survival task."
+    if [[ "$solution" == *"while"* && "$solution" == *"do"* && "$solution" == *"power="* ]]; then
+        echo "The machine whirs to life and stabilizes! The room's lighting intensifies as the energy levels balance."
     else
-        echo "You failed to repair the pump. Drowned. Game Over."
-        log_action "Player failed survival task and drowned."
-        exit 1
+        ((mistakes++))
+        echo "The machine sputters and powers down. Mistakes: $mistakes/$max_mistakes"
+        if ((mistakes < max_mistakes)); then
+            echo "Hint: Try using a 'while' loop to ensure the power stays within the range of 5 to 10."
+        fi
+        check_mistakes
     fi
 }
 
+# Task 3: Solve the Logic Puzzle
+function logic_puzzle() {
+    echo "\nBefore you lies an ancient puzzle box with intricate markings. The box requires you to match glyph fragments to their corresponding meanings using a loop."
+    echo "Each fragment must be checked in sequence. The box can only be opened if the fragments are correctly aligned."
+    echo "Example: for ((i=0; i<5; i++)); do ... done"
+    
+    read -p "Enter your loop script: " solution
+
+    if [[ "$solution" == *"for"* && "$solution" == *"((i="* && "$solution" == *"do"* ]]; then
+        echo "The puzzle box clicks open, revealing a glowing Codex fragment inside!"
+    else
+        ((mistakes++))
+        echo "The box remains locked. Mistakes: $mistakes/$max_mistakes"
+        if ((mistakes < max_mistakes)); then
+            echo "Hint: Use a 'for' loop with an index to check the fragments in sequence."
+        fi
+        check_mistakes
+    fi
+}
+
+# Survival Task: Repair the Pump
+function survival_task() {
+    echo "\nSuddenly, the floor begins to tremble, and water starts flooding the chamber. You realize that the pump system has failed."
+    echo "You have these items: pipe, wrench, and sealant. Use them to repair the pump before the chamber is completely submerged."
+
+    while ((survival_attempts < 2)); do
+        read -p "Combine items to repair the pump: " solution
+
+        if [[ "$solution" == "pipe+wrench+sealant" ]]; then
+            echo "You skillfully repair the pump, stopping the flood just in time. The water level begins to recede."
+            log_action "Survival task completed"
+            return
+        else
+            ((survival_attempts++))
+            echo "The pump is still broken. Attempts remaining: $((2 - survival_attempts))"
+        fi
+    done
+
+    echo "You failed the survival task. The chamber is flooded. Game Over!"
+    exit 1
+}
+
+# Check Mistakes
+function check_mistakes() {
+    if ((mistakes >= max_mistakes)); then
+        echo "Too many mistakes! You triggered the survival task."
+        survival_task
+    fi
+}
+
+# Stage Entry Point
 function stage3() {
     display_stage_banner "Mysterious Inscriptions Chamber"
 
-    translate_glyphs
-    operate_machine
-    logic_puzzle
+    echo "Welcome to the Mysterious Inscriptions Chamber. Solve the puzzles and survive the challenges to collect a Codex fragment and escape."
 
-    if [ $mistakes -lt $Max_mistakes ]; then
-        echo "You successfully completed Stage 3 and discovered a Codex fragment!"
+    # Task 1: Translate Glyphs
+    translate_glyphs
+    if ((mistakes < max_mistakes)); then
+        # Task 2: Operate the Machine
+        operate_machine
+    fi
+    if ((mistakes < max_mistakes)); then
+        # Task 3: Solve the Logic Puzzle
+        logic_puzzle
+    fi
+
+    # Successful Completion
+    if ((mistakes < max_mistakes)); then
+        echo "Congratulations! You’ve solved all the challenges and discovered a Codex fragment!"
+        log_action "Stage 3 completed"
         update_score 30
         save_stage_progress "Stage 3"
     fi
 }
 
+# Start Stage 3
 stage3

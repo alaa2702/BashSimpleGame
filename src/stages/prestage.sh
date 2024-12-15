@@ -53,33 +53,34 @@ function collect_supplies() {
 
     while true; do
         read -p "> " player_input
-        if [ "$player_input" == "grep" ] then
-            echo "Searching for supplies in supplies.txt..."
-            grep -i "supply" assets/playing_files/barrel.txt
-            log_action "Player searched for supplies."
-            echo "You found supplies in the barrel."
-            echo "add them to your inventory."
-            echo "You can create a file to store your inventory using 'touch inventory.txt'"
-            while true; do
-                read -p "> " player_input
-                if [[ "$player_input" == "touch inventory.txt" ]]; then
-                    touch assets/playing_files/inventory.txt
-                    log_action "Player created an inventory file."
-                    for i in $(grep -i "supply" assets/playing_files/barrel.txt | cut -d ":" -f 2)
-                    do
-                        add_to_inventory "$i" 1
-                        echo "$i" >> assets/playing_files/inventory.txt
-                    done
-                    break
-                else
-                    echo "Invalid choice. Use 'touch inventory.txt' to create an inventory file."
-                fi
+       if [ "$player_input" == "grep" ]; then
+       echo "Searching for supplies in supplies.txt..."
+       grep -i "supply" assets/playing_files/barrel.txt
+       log_action "Player searched for supplies."
+       echo "You found supplies in the barrel."
+       echo "Add them to your inventory."
+       echo "You can create a file to store your inventory using 'touch inventory.txt'"
+        while true; do
+        read -p "> " player_input
+        if [[ "$player_input" == "touch inventory.txt" ]]; then
+            touch assets/playing_files/inventory.txt
+            log_action "Player created an inventory file."
+            for i in $(grep -i "supply" assets/playing_files/barrel.txt | cut -d ":" -f 2)
+            do
+                add_to_inventory "$i" 1
+                echo "$i" >> assets/playing_files/inventory.txt
             done
-            
             break
         else
-            echo "Invalid choice. Use 'grep' to search."
+            echo "Invalid choice. Use 'touch inventory.txt' to create an inventory file."
         fi
+        done
+ 
+        break
+        else
+          echo "Invalid choice. Use 'grep' to search."
+        fi
+
     done
 
     echo "Now, you can view your inventory using 'cat inventory.txt'."
@@ -123,7 +124,7 @@ function next_path() {
             echo "Checking available files:"
             cat assets/playing_files/map.txt
             ;;
-        ;;  
+          
         *) echo "Invalid choice. Use 'a' or 'b'."
             ;;
         esac
