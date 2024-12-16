@@ -2,13 +2,14 @@
 # utils/logs.sh
 
 
-function creat_file_for_player() {
+function creat_Log_file_for_player() {
     player_name=$1
     current_date=$(date +%F)
-    check_file_exist
+    check_log_file_exist
+
 }
 
-function check_file_exist() {
+function check_log_file_exist() {
     log_file_name="assets/logs/${player_name}_log_${current_date}.log"
     if [ ! -f $log_file_name ]
     then

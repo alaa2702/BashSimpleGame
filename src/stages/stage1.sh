@@ -18,6 +18,7 @@ Max_mistakes=5
 # Define the hexagon area calculation function
 
 function read_glyphs(){
+    mistake=0
     echo "task 1: read the glyphs"
     echo "you stand infront an enormous stone door covered in intricate geometric patterns. "
     echo "The door won’t budge"
@@ -33,6 +34,11 @@ function read_glyphs(){
         ;;
         *)
         check_command "$input" "stage1"
+        if [ $? -eq 0 ]; then
+            ((mistakes++))
+            if [[ $mistakes -eq 2 ]]; then
+                echo "Hint: Use 'cat filename' to view the contents of a file."
+            fi        fi
         ;;
     esac
     done
@@ -112,6 +118,8 @@ function stage1() {
 
     # Successful Completion
     echo "The door opens, revealing a fragment of the Codex and an ancient map."
+    add_to_inventory "Fragment1"
+    add_to_inventory "ancient map"
     echo "You have completed Stage 1!"
     log_action "Stage 1 completed."
     update_score 20

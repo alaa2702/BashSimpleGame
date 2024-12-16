@@ -4,24 +4,6 @@
 source utils/player.sh
 source utils/logs.sh
 
-# Display a hint for the current stage
-function display_hint() {
-    local stage_name=$1
-    local task=$2
-    # Check if a hint is available for the current stage and task
-    local hint_file="assets/hints/${stage_name}_hints.txt"
-    #search for the task hint in the file
-    hint=$(grep -i "$task" "$hint_file" | cut -d ":" -f 2) #search for the task hint in the file 
-    if [[ -n "$hint" ]]; then
-        echo "Hint for Stage $stage: $hint"
-        log_action "Hint displayed for Stage $stage: $hint"
-        return 1
-    else
-        echo "No hints available for this stage."
-        log_error "Hint requested for Stage $stage but not found."
-        return 0
-    fi
-}
 
 # Print a banner for a stage
 function display_stage_banner() {
@@ -58,18 +40,17 @@ function check_command() {
         log_action "Player checked their status."
         return 1
         ;;
-    "cat hints.txt")
-        echo "Checking available files:"
-        display_hint "$current_stage" "hints"
-        log_action "Player checked the hints."
-        return 1
-        ;;
     "cat inventory.txt")
         echo "Checking inventory contents:"
         cat assets/playing_files/inventory.txt
         log_action "Player checked their inventory."
         return 1
         ;;
+    "quit")
+        echo "Exiting the game..."
+        save_stage_progress $current_stage
+        exist 0
+        log_action "Player exited the game."
     *)
         echo "Invalid choice."
         return 0

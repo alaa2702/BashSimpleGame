@@ -9,13 +9,38 @@ source utils/logs.sh
 
 mistakes=0
 survival_attempts=0
-Max_mistakes=5
+max_mistakes=5
+
+# Function to provide dynamic hints
+generate_hint() {
+    local task="$1"
+    case "$task" in
+        "create_and_populate_arrays")
+            echo "Hint: Use the format 'arr=(1 2 3 ... 10)' to create an array. Ensure you include all numbers from 1 to 10 without missing any."
+            ;;
+        "iterate_through_arrays")
+            echo "Hint: Use 'for item in' to iterate through the array. Print each element using 'echo \$item'. Check your loop syntax carefully."
+            ;;
+        "advanced_array_manipulations")
+            echo "Hint: Use 'if (( item % 2 == 0 ))' to identify even numbers. Append them to a new array using 'even_arr+=(\$item)'."
+            ;;
+        "unlock_hidden_room")
+            echo "Hint: Use 'if [[ \$item -eq 7 ]]' to match the number 7 in the array. Ensure the condition is inside a loop."
+            ;;
+        "survival_task")
+            echo "Hint: Use a 'while read' loop to read each line of 'gaps.txt'. Bridge each gap with 'echo \"Bridging \$gap\"'."
+            ;;
+        *)
+            echo "Hint: Review your syntax and ensure the logic aligns with the task requirements."
+            ;;
+    esac
+}
 
 # Task: Create and Populate Arrays
 function create_and_populate_arrays() {
     echo "The ancient hall echoes as tiles begin to shift. You must align the sequence to stabilize the room."
     echo "Task: Create and populate an array with the numbers 1-10 to align the shifting tiles."
-    echo "Example: arr=(1 2 3 4 5 6 7 8 9 10)"
+    echo "Example: arr=(number1 number2 ... number10)"
     read -p "Enter your solution: " solution
 
     if [[ "$solution" == *"arr=(1 2 3 4 5 6 7 8 9 10)"* ]]; then
@@ -23,10 +48,8 @@ function create_and_populate_arrays() {
         log_action "Array created and populated successfully."
     else
         ((mistakes++))
-        echo "The tiles tremble! Mistakes: $mistakes/$Max_mistakes"
-        if [[ "$mistakes" -lt "$Max_mistakes" ]]; then
-            echo "Hint: Use the format 'arr=(1 2 3 ... 10)' to define an array with elements."
-        fi
+        echo "The tiles tremble! Mistakes: $mistakes/$max_mistakes"
+        generate_hint "create_and_populate_arrays"
         check_mistakes
     fi
 }
@@ -35,7 +58,6 @@ function create_and_populate_arrays() {
 function iterate_through_arrays() {
     echo "The next puzzle activates: glowing symbols appear on each tile. Iterate through the array to reveal their meaning."
     echo "Task: Write a script to iterate through the array and print each element."
-    echo "Example: for item in \"\${arr[@]}\"; do echo \$item; done"
     read -p "Enter your solution: " solution
 
     if [[ "$solution" == *"for item in"* && "$solution" == *"echo \$item"* ]]; then
@@ -43,10 +65,8 @@ function iterate_through_arrays() {
         log_action "Array iteration successful."
     else
         ((mistakes++))
-        echo "The symbols dim. Mistakes: $mistakes/$Max_mistakes"
-        if [[ "$mistakes" -lt "$Max_mistakes" ]]; then
-            echo "Hint: Use a 'for' loop to access each element in the array and 'echo' to print them."
-        fi
+        echo "The symbols dim. Mistakes: $mistakes/$max_mistakes"
+        generate_hint "iterate_through_arrays"
         check_mistakes
     fi
 }
@@ -63,10 +83,8 @@ function advanced_array_manipulations() {
         log_action "Array filtered for even numbers successfully."
     else
         ((mistakes++))
-        echo "The door remains sealed. Mistakes: $mistakes/$Max_mistakes"
-        if [[ "$mistakes" -lt "$Max_mistakes" ]]; then
-            echo "Hint: Use 'if (( item % 2 == 0 ))' to check for even numbers and append them to a new array."
-        fi
+        echo "The door remains sealed. Mistakes: $mistakes/$max_mistakes"
+        generate_hint "advanced_array_manipulations"
         check_mistakes
     fi
 }
@@ -79,14 +97,13 @@ function unlock_hidden_room() {
     read -p "Enter your solution: " solution
 
     if [[ "$solution" == *"if [[ \$item -eq 7 ]]"* ]]; then
-        echo "The room unlocks, revealing ancient treasures and Codex fragments!"
+        echo "The room unlocks, revealing ancient treasures and Codex fragment!"
+        add_to_inventory "Fragment8"
         log_action "Hidden room unlocked successfully."
     else
         ((mistakes++))
-        echo "The tile remains dormant. Mistakes: $mistakes/$Max_mistakes"
-        if [[ "$mistakes" -lt "$Max_mistakes" ]]; then
-            echo "Hint: Use 'if [[ \$item -eq 7 ]]' to identify the number 7 in the array."
-        fi
+        echo "The tile remains dormant. Mistakes: $mistakes/$max_mistakes"
+        generate_hint "unlock_hidden_room"
         check_mistakes
     fi
 }
@@ -110,7 +127,7 @@ function survival_task() {
             exit 1
         else
             echo "The gap widens! Attempts remaining: $((2 - survival_attempts))"
-            echo "Hint: Use a 'while read' loop to process the contents of 'gaps.txt'."
+            generate_hint "survival_task"
             survival_task
         fi
     fi
@@ -118,7 +135,7 @@ function survival_task() {
 
 # Check for Mistakes
 function check_mistakes() {
-    if ((mistakes >= Max_mistakes)); then
+    if ((mistakes >= max_mistakes)); then
         echo "Too many mistakes! The room collapses violently. Initiating survival task."
         survival_task
     fi
@@ -136,7 +153,7 @@ function stage5() {
     unlock_hidden_room
 
     # Successful Completion
-    if ((mistakes < Max_mistakes)); then
+    if ((mistakes < max_mistakes)); then
         echo "You align the hall, uncover the Codex fragments, and unlock a shortcut for Stage 6!"
         log_action "Stage 5 completed"
         update_score 50

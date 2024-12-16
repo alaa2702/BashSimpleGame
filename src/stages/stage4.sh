@@ -9,80 +9,113 @@ source utils/logs.sh
 
 mistakes=0
 survival_attempts=0
-Max_mistakes=5
+max_mistakes=5
 
-# Function to disable traps
+# Dynamic hints for each task
+function provide_hint() {
+    local task_name=$1
+    local mistake_count=$2
+
+    case "$task_name" in
+        "disable_trap")
+            case "$mistake_count" in
+                1) echo "Hint: Create a function named 'disable_trap' and include the action 'cut wires' inside it." ;;
+                2) echo "Hint: Ensure your function syntax is correct, e.g., 'function disable_trap { cut wires; }'." ;;
+                *) echo "Critical Hint: Use 'function disable_trap { echo \"cut wires\"; }' to solve the trap." ;;
+            esac
+            ;;
+        "solve_puzzle")
+            case "$mistake_count" in
+                1) echo "Hint: Create a function named 'solve_riddle' and ensure it returns 'echo'." ;;
+                2) echo "Hint: Use 'return echo' inside the function to provide the correct answer." ;;
+                *) echo "Critical Hint: Write 'function solve_riddle { return echo; }' to solve the puzzle." ;;
+            esac
+            ;;
+        "open_hidden_chamber")
+            case "$mistake_count" in
+                1) echo "Hint: Use conditions (e.g., if/else) to ensure the numbers meet the requirements." ;;
+                2) echo "Hint: Ensure your function iterates over possible values for the combination." ;;
+                *) echo "Critical Hint: Use 'if [ ... ] && [ ... ]; then ... fi' to solve the lock." ;;
+            esac
+            ;;
+    esac
+}
+
+# Task 1: Disable a trap
 function disable_trap() {
     echo "You enter the chamber, and the floor clicks beneath your feet. Suddenly, darts shoot out from the walls!"
     echo "Task: Write a function to disable the dart trap before it’s too late."
-    echo "Hint: Use 'function disable_trap() { ... }' and include 'cut wires' in the function body."
-    
-    read -p "Enter your function script: " solution
 
-    if [[ "$solution" == *"function disable_trap"* && "$solution" == *"cut wires"* ]]; then
-        echo "You successfully cut the wires, and the darts stop firing. The path is clear!"
-        log_action "Trap disabled successfully."
-    else
-        ((mistakes++))
-        echo "The darts keep firing! Mistakes: $mistakes/$Max_mistakes"
-        if ((mistakes < Max_mistakes)); then
-            echo "Hint: Ensure your function includes 'function disable_trap()' and 'cut wires' as part of the solution."
+    while true; do
+        read -p "Enter your function script: " solution
+
+        if [[ "$solution" == *"function disable_trap"* && "$solution" == *"cut wires"* ]]; then
+            echo "You successfully cut the wires, and the darts stop firing. The path is clear!"
+            log_action "Trap disabled successfully."
+            break
+        else
+            ((mistakes++))
+            echo "The darts keep firing! Mistakes: $mistakes/$max_mistakes"
+            provide_hint "disable_trap" "$mistakes"
+            check_mistakes
         fi
-        check_mistakes
-    fi
+    done
 }
 
-# Function to solve a mini-puzzle
+# Task 2: Solve a mini-puzzle
 function solve_puzzle() {
     echo "You find a locked chest glowing faintly with ancient energy."
     echo "A riddle appears: 'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?'"
-    echo "Task: Solve the riddle to open the chest."
 
-    read -p "Your answer: " answer
+    while true; do
+        read -p "Create a function named 'solve_riddle' to return the answer: " solution
 
-    if [[ $answer == "echo" ]]; then
-        echo "The chest clicks open, revealing a shimmering Codex fragment!"
-        log_action "Riddle solved successfully."
-    else
-        ((mistakes++))
-        echo "The chest remains locked. Mistakes: $mistakes/$Max_mistakes"
-        if ((mistakes < Max_mistakes)); then
-            echo "Hint: Think of something that resonates or reflects sound waves."
+        if [[ "$solution" == *"function solve_riddle"* && "$solution" == *"return echo"* ]]; then
+            echo "The chest clicks open, revealing 3 shimmering Codex fragments!"
+            add_to_inventory "Fragment4"
+            add_to_inventory "Fragment5"
+            add_to_inventory "Fragment6"
+            log_action "Riddle solved successfully with a custom function."
+            break
+        else
+            ((mistakes++))
+            echo "The chest remains locked. Mistakes: $mistakes/$max_mistakes"
+            provide_hint "solve_puzzle" "$mistakes"
+            check_mistakes
         fi
-        check_mistakes
-    fi
+    done
 }
 
-# Function to open a hidden chamber (Edited)
+# Task 3: Open a hidden chamber
 function open_hidden_chamber() {
     echo "You find a massive stone door with a complex mechanical lock. The lock has three rotating dials, each labeled with numbers from 1 to 9."
-    echo "Task: Solve the combination lock using the following clues:"
+    echo "Task: Write a function to solve the combination lock using these clues:"
     echo "1. The sum of the three numbers is 15."
     echo "2. The first number is twice the second number."
     echo "3. The third number is 5 less than the first number."
-    echo "Enter the three numbers separated by spaces (e.g., '6 3 4')."
 
-    read -p "Enter your solution: " num1 num2 num3
+    while true; do
+        read -p "Create a function named 'solve_lock' that implements the conditions: " solution
 
-    if [[ $num1 -eq 6 && $num2 -eq 3 && $num3 -eq 1 ]]; then
-        echo "The lock clicks open, and the stone door slides aside to reveal another Codex fragment!"
-        log_action "Hidden chamber unlocked successfully."
-    else
-        ((mistakes++))
-        echo "The lock remains jammed. Mistakes: $mistakes/$Max_mistakes"
-        if ((mistakes < Max_mistakes)); then
-            echo "Hint: Carefully recheck the clues and your calculations."
+        if [[ "$solution" == *"function solve_lock()"* && "$solution" == *"if"* && "$solution" == *"fi"* ]]; then
+            echo "The lock clicks open, and the stone door slides aside to reveal another Codex fragment!"
+            add_to_inventory "Fragment7"
+            log_action "Hidden chamber unlocked successfully with a custom function."
+            break
+        else
+            ((mistakes++))
+            echo "The lock remains jammed. Mistakes: $mistakes/$max_mistakes"
+            provide_hint "open_hidden_chamber" "$mistakes"
+            check_mistakes
         fi
-        check_mistakes
-    fi
+    done
 }
 
 # Function to stabilize a collapsing ceiling
 function stabilize_ceiling() {
     echo "SURVIVAL CHALLENGE: The chamber begins to shake violently, and the ceiling starts collapsing!"
     echo "You must act quickly to build supports from the available resources: wood, rope, and metal rods."
-    echo "Task: Combine all three resources to stabilize the ceiling."
-
+    
     while ((survival_attempts < 2)); do
         read -p "Enter your solution (e.g., 'wood+rope+metal rods'): " solution
 
@@ -93,9 +126,7 @@ function stabilize_ceiling() {
         else
             ((survival_attempts++))
             echo "The ceiling continues to collapse! Attempts remaining: $((2 - survival_attempts))"
-            if ((survival_attempts < 2)); then
-                echo "Hint: Use all three resources (wood, rope, metal rods) and combine them in the correct format."
-            fi
+            echo "Hint: Use all three resources (wood, rope, metal rods) and combine them in the correct format."
         fi
     done
 
@@ -105,7 +136,7 @@ function stabilize_ceiling() {
 
 # Function to check mistakes
 function check_mistakes() {
-    if ((mistakes >= Max_mistakes)); then
+    if ((mistakes >= max_mistakes)); then
         echo "You’ve made too many mistakes! The chamber begins to collapse around you."
         stabilize_ceiling
     fi
@@ -127,7 +158,7 @@ function stage4() {
     open_hidden_chamber
 
     # Successful Completion
-    if ((mistakes < Max_mistakes)); then
+    if ((mistakes < max_mistakes)); then
         echo "Congratulations! You’ve collected all the fragments and escaped the chamber."
         echo "Fragments collected: 4"
         log_action "Stage 4 completed successfully."

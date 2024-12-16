@@ -211,9 +211,7 @@ function Enter_the_Temple() {
 
 function pre_stage() {
     # Display stage banner
-    echo "=============================="
-    echo " Pre-Stage: Jungle Trek"
-    echo "=============================="
+    display_stage_banner "Pre-Stage: Jungle Trek"
 
     echo "You are deep in the jungle. Your goal is to prepare for the expedition to the temple."
     
